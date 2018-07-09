@@ -9,7 +9,6 @@ from ixmp import utils
 def make_obs(fname, exp, **kwargs):
     utils.pd_write(exp, fname, index=False)
     obs = utils.pd_read(fname, **kwargs)
-    os.remove(fname)
     return obs
 
 
@@ -18,6 +17,7 @@ def test_pd_io_csv():
     exp = pd.DataFrame({'a': [0, 1], 'b': [2, 3]})
     obs = make_obs(fname, exp)
     pdt.assert_frame_equal(obs, exp)
+    os.remove(fname)
 
 
 def test_pd_io_xlsx():
@@ -25,6 +25,7 @@ def test_pd_io_xlsx():
     exp = pd.DataFrame({'a': [0, 1], 'b': [2, 3]})
     obs = make_obs(fname, exp)
     pdt.assert_frame_equal(obs, exp)
+    os.remove(fname)
 
 
 def test_pd_io_xlsx_multi():
@@ -37,3 +38,4 @@ def test_pd_io_xlsx_multi():
     for k, _exp in exp.items():
         _obs = obs[k]
         pdt.assert_frame_equal(_obs, _exp)
+    os.remove(fname)
